@@ -4,6 +4,7 @@ import { Nav } from "./views/Header/Nav";
 import { Home } from './views/Body/HomePage/Home';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { ListPokemon } from "./views/Body/Pokemon/ListPokemon"
 
 function App() {
 
@@ -11,8 +12,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Nav />
-        <img src={logo} className="App-logo" alt="logo" />
-        <Home />
+        {/* <Home /> */}
+        <ListPokemon />
       </header>
       <ToastContainer
         position="top-right"
