@@ -15,10 +15,11 @@ export const ImagePokemon = (props) => {
             }
         };
         fetchData();
-    }, []);
+    }, [props]);
+
     return (
         <>
-            <img src={img} alt="image prokemon" height={50} width={50} />
+            <img src={img} alt="pokemon" height={50} width={50} />
         </>
     )
 }

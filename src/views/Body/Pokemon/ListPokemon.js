@@ -1,48 +1,12 @@
 import "./ListPokemon.scss";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { ImagePokemon } from "./ImagePokemon";
+import { useFetch } from "../../../customize/fetch";
 
 export const ListPokemon = () => {
-    const [dataPokemon, setDataPokemon] = useState([]);
-    const [quantity, setQuantity] = useState('500');
-    const [loading, setLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
-
-    const handleOnClickSelect = (event) => {
-        setQuantity(event.target.value)
-    }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // use fetch
-                // let res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10&offset=0');
-                // res.json().then(json => {
-                //     setDataPokemon(json.results)
-                // })
-
-                let res = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${quantity}&offset=0`);
-                let data = res && res.data && res.data.results ? res.data.results : [];
-                setDataPokemon(data);
-                setLoading(false);
-            } catch (error) {
-                setIsError(true);
-                setLoading(false);
-            }
-        };
-        setTimeout(async () => { fetchData() }, 3000);
-    }, []);
+    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=$500&offset=0')
 
     return (
         <>
-            <div className="select-quantity">
-                <select value={quantity} onChange={(event) => handleOnClickSelect(event)}>
-                    <option value={10}>10</option>
-                    <option value={100}>100</option>
-                    <option value={500}>500</option>
-                </select>
-            </div>
             <h1>List Pokemon</h1>
             {
                 loading === false && dataPokemon && dataPokemon.length > 0 &&
