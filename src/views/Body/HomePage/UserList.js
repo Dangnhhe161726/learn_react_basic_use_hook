@@ -33,18 +33,18 @@ export const UserList = (props) => {
                     </>
                     :
                     <>
-                        <table className="list-user-item" border={1}>
-                            <thead>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Name</td>
-                                    <td>Address</td>
-                                    <td>Action</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users && users.length > 0 &&
-                                    users.map(user => {
+                        {users && users.length > 0 ?
+                            <table className="list-user-item" border={1}>
+                                <thead>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Name</td>
+                                        <td>Address</td>
+                                        <td>Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {users.map(user => {
                                         return (
                                             <tr key={user.id}>
                                                 <td>{user.id}</td>
@@ -54,10 +54,12 @@ export const UserList = (props) => {
                                             </tr>
                                         )
                                     })
-                                }
-                            </tbody>
-
-                        </table>
+                                    }
+                                </tbody>
+                            </table>
+                            :
+                            <></>
+                        }
                         <button className="btn-show" onClick={() => onClickButtonHide()}>Hide</button>
                     </>
                 }
