@@ -26,6 +26,7 @@ export const useFetch = (url) => {
             }
         };
         setTimeout(async () => { fetchData() }, 3000);
+
     }, [url]);
 
     return {

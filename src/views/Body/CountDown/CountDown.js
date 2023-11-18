@@ -99,8 +99,8 @@ export const CountDownUseHook = () => {
     const [minute, setMinute] = useState('');
     const [hour, setHour] = useState('');
     const [day, setDay] = useState('');
-    const [dayBrith, setDayBrith] = useState('');
-    const [monthBrith, setMonthBrith] = useState('');
+    const [dayBrith, setDayBrith] = useState('19');
+    const [monthBrith, setMonthBrith] = useState('11');
 
     useEffect(() => {
         if (distance < 0) {
@@ -118,15 +118,14 @@ export const CountDownUseHook = () => {
             mm = String(today.getMonth() + 1).padStart(2, "0"),
             yyyy = today.getFullYear(),
             nextYear = yyyy + 1,
-            dayBrith = 19,
-            monthBrith = 11,
-            birthday = monthBrith + "/" + dayBrith + "/" + yyyy;
-        setDayBrith(dayBrith);
-        setMonthBrith(monthBrith);
+            dayOfBrith = dayBrith,
+            monthOfBrith = monthBrith,
+            birthday = monthOfBrith + "/" + dayOfBrith + "/" + yyyy;
+
         today = mm + "/" + dd + "/" + yyyy;
 
         if (today > birthday) {
-            birthday = monthBrith + "/" + dayBrith + "/" + nextYear;
+            birthday = monthOfBrith + "/" + dayOfBrith + "/" + nextYear;
         }
 
         let timer = setInterval(() => {
