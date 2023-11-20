@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFetch } from "../../../customize/fetch";
 import { Loading, IsError } from "../../Animation/Animation";
 import "../Pokemon/ListPokemon.scss";
@@ -16,31 +17,36 @@ export const Blogs = () => {
     return (
         <>
             <h2>Blogs Page</h2>
-            <div className="blog-container">
-                {loading === false && newDataBlog.length > 0 &&
-                    newDataBlog.map(item => {
-                        return (
-                            <div className="single-blog" key={item.id}>
-                                <div className="title">
-                                    <span>title : </span> {item.title}
-                                </div>
-                                <div className="content">
-                                    {item.body}
-                                    <button>
-                                        <Link to={`/blogs/${item.id}`}>View Detail</Link>
-                                    </button>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-
-
+            {
+                loading === false &&
+                <>
+                    <div className="add-blog">
+                        <button className="btn-add-blog"><Link to="/blogs/add-blog">+ Add new blog</Link></button>
+                    </div>
+                    <div className="blog-container">
+                        {newDataBlog.length > 0 &&
+                            newDataBlog.map(item => {
+                                return (
+                                    <div className="single-blog" key={item.id}>
+                                        <div className="title">
+                                            <span>title : </span> {item.title}
+                                        </div>
+                                        <div className="content">
+                                            {item.body}
+                                            <button>
+                                                <Link to={`/blogs/${item.id}`}>View Detail</Link>
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </>
+            }
             <Loading
                 loading={loading}
             />
-
 
             <IsError
                 isError={isError}
@@ -77,6 +83,37 @@ export const BlogDetail = () => {
                         </div>
                     </>
                 }
+            </div>
+        </div>
+    )
+}
+
+export const AddNewBlog = () => {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
+    const onSubmitForm = (e) => {
+        e.preventDefault();
+        console.log('>>submit form:', title, content);
+    }
+
+    return (
+        <div className="add-blog-page">
+            <div className="add-blog-title">
+                Add new Blog
+            </div>
+            <div className="add-blog-form">
+                <form onSubmit={(e) => onSubmitForm(e)}>
+                    <label htmlFor="title">Title</label>
+                    <input id="title" type="text" placeholder="Enter title..."
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)} /><br />
+                    <label htmlFor="content">Content</label>
+                    <textarea id="content" placeholder="Enter content..."
+                        value={content}
+                        onChange={(event) => setContent(event.target.value)}></textarea><br />
+                    <button className="btn-submit-form" type="submit">Add</button>
+                </form>
             </div>
         </div>
     )

@@ -84,3 +84,52 @@ h2 {
         }
     }
 }
+
+.add-blog {
+    width: 100%;
+    text-align: left;
+
+    .btn-add-blog {
+        margin: 0 0 30px 30px;
+        cursor: pointer;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    }
+}
+
+.add-blog-page {
+    border: 1px solid white;
+
+    .add-blog-title {
+        font-size: 30px;
+        font-weight: bold;
+        color: violet;
+        margin-top: 5px;
+    }
+
+    .add-blog-form {
+        width: 400px;
+        height: auto;
+
+        padding: 20px;
+
+        label {
+            display: block;
+            text-align: left;
+            padding: 10px 0px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 5px 20px;
+        }
+    }
+}
