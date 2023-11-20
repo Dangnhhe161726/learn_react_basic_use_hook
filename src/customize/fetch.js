@@ -7,6 +7,7 @@ export const useFetch = (url) => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
+        const ourRequest = axios.CancelToken.source();
         const fetchData = async () => {
             try {
                 // use fetch
@@ -15,18 +16,27 @@ export const useFetch = (url) => {
                 //     setdata(json.results)
                 // })
 
-                let res = await axios.get(url);
+                let res = await axios.get(url, {
+                    cancelToken: ourRequest.token,
+                });
                 let data = res && res.data && res.data.results ? res.data.results : [];
                 setdata(data);
                 setLoading(false);
-                console.log('>> get api', data)
             } catch (error) {
-                setIsError(true);
-                setLoading(false);
+                if (axios.isCancel(error)) {
+                    console.log('>> error', error.message)
+                } else {
+                    setIsError(true);
+                    setLoading(false);
+                }
             }
         };
-        setTimeout(async () => { fetchData() }, 3000);
 
+        setTimeout(async () => { fetchData() }, 3000);
+        //Cancel token use when request api
+        return () => {
+            ourRequest.cancel();
+        }
     }, [url]);
 
     return {

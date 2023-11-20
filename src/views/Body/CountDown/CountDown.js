@@ -14,6 +14,12 @@ export class CountDown extends React.Component {
         monthBrith: '11'
     }
 
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
     componentDidMount() {
 
         const second = 1000,

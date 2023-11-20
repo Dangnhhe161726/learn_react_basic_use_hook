@@ -3,7 +3,7 @@ import { ImagePokemon } from "./ImagePokemon";
 import { useFetch } from "../../../customize/fetch";
 
 export const ListPokemon = () => {
-    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=$500&offset=0')
+    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=500&offset=0')
 
     return (
         <>
