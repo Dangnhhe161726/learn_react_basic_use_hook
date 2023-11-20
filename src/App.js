@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ListPokemon } from "./views/Body/Pokemon/ListPokemon";
 import { CountDown, CountDownUseHook } from './views/Body/CountDown/CountDown';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Blogs, BlogDetail } from './views/Body/Blogs/Blogs';
+import { NoMatch } from './views/Body/ErrorRouter/NoMatch';
 
 function App() {
 
@@ -15,6 +17,12 @@ function App() {
         <header className="App-header">
           <Nav />
           <Switch>
+            <Route path="/blogs/:id" exact>
+              <BlogDetail />
+            </Route>
+            <Route path="/blogs" exact>
+              <Blogs />
+            </Route>
             <Route path="/count-down-hook">
               <CountDownUseHook />
             </Route>
@@ -24,8 +32,11 @@ function App() {
             <Route path="/list-pokemon">
               <ListPokemon />
             </Route>
-            <Route path="/">
+            <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="*">
+              <NoMatch />
             </Route>
           </Switch>
           <ToastContainer

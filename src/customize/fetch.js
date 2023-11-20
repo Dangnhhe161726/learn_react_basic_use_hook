@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const useFetch = (url) => {
+export const useFetch = (url, checkComponents) => {
     const [data, setdata] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isError, setIsError] = useState(false);
@@ -19,8 +19,13 @@ export const useFetch = (url) => {
                 let res = await axios.get(url, {
                     cancelToken: ourRequest.token,
                 });
-                let data = res && res.data && res.data.results ? res.data.results : [];
-                setdata(data);
+                if (checkComponents === true) {
+                    let data = res && res.data && res.data.results ? res.data.results : [];
+                    setdata(data);
+                } else {
+                    let data = res && res.data ? res.data : [];
+                    setdata(data);
+                }
                 setLoading(false);
             } catch (error) {
                 if (axios.isCancel(error)) {

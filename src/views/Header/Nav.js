@@ -9,6 +9,7 @@ export const Nav = () => {
                 <NavLink to="/list-pokemon" activeClassName="active">Pokemon</NavLink>
                 <NavLink to="/count-down-class" activeClassName="active">Count Down Brith Day (Class)</NavLink>
                 <NavLink to="/count-down-hook" activeClassName="active">Count Down Brith Day (Hook)</NavLink>
+                <NavLink to="/blogs" activeClassName="active">Blog</NavLink>
             </div>
         </>
     )

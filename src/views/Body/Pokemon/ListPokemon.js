@@ -1,9 +1,10 @@
 import "./ListPokemon.scss";
 import { ImagePokemon } from "./ImagePokemon";
 import { useFetch } from "../../../customize/fetch";
+import { Loading, IsError } from "../../Animation/Animation";
 
 export const ListPokemon = () => {
-    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=500&offset=0')
+    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=500&offset=0', true)
 
     return (
         <>
@@ -34,16 +35,14 @@ export const ListPokemon = () => {
                 </table>
             }
 
-            {
-                loading === true &&
-                <div className="loader"></div>
-            }
+            <Loading
+                loading={loading}
+            />
 
-            {
-                isError === true &&
-                <h1 style={{ color: 'red' }}>Something wrong...</h1>
-            }
 
+            <IsError
+                isError={isError}
+            />
 
         </>
     )
