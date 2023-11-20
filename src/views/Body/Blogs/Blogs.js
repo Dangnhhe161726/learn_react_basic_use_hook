@@ -5,7 +5,7 @@ import "./Blog.scss";
 import { Link, useParams, useHistory } from 'react-router-dom';
 
 export const Blogs = () => {
-    const { data: dataBlog, loading, isError } = useFetch('https://jsonplaceholder.typicode.com/posts', false);
+    const { data: dataBlog, loading, isError } = useFetch('https://jsonplaceholder.typicode.com/posts', false, 3000);
 
     let newDataBlog = [];
     if (dataBlog && dataBlog.length > 0) {
@@ -52,10 +52,12 @@ export const Blogs = () => {
 export const BlogDetail = () => {
     let { id } = useParams();
     let history = useHistory();
+    const { data: dataBlogDetail, loading } = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}`, false, 0);
 
     const handleBackData = () => {
         history.push('/blogs')
     }
+
     return (
         <div className="blog-detail">
             <div className="top-body">
@@ -64,9 +66,18 @@ export const BlogDetail = () => {
                 </button>
             </div>
             <div className="bottom-body">
-                blog details {id}
+                {
+                    loading === false && dataBlogDetail &&
+                    <>
+                        <div className="title">
+                            <span>title:</span> {dataBlogDetail.title}
+                        </div>
+                        <div className="content">
+                            {dataBlogDetail.body}
+                        </div>
+                    </>
+                }
             </div>
-
         </div>
     )
 }

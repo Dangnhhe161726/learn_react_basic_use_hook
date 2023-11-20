@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const useFetch = (url, checkComponents) => {
+export const useFetch = (url, checkComponents, timeRender) => {
     const [data, setdata] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isError, setIsError] = useState(false);
@@ -36,13 +36,12 @@ export const useFetch = (url, checkComponents) => {
                 }
             }
         };
-
-        setTimeout(async () => { fetchData() }, 3000);
+        setTimeout(async () => { fetchData() }, timeRender);
         //Cancel token use when request api
         return () => {
             ourRequest.cancel();
         }
-    }, [url]);
+    }, [url, checkComponents, timeRender]);
 
     return {
         data, loading, isError

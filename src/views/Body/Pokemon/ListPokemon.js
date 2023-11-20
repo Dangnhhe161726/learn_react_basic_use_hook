@@ -4,7 +4,7 @@ import { useFetch } from "../../../customize/fetch";
 import { Loading, IsError } from "../../Animation/Animation";
 
 export const ListPokemon = () => {
-    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=500&offset=0', true)
+    const { data: dataPokemon, loading, isError } = useFetch(' https://pokeapi.co/api/v2/pokemon?limit=500&offset=0', true, 3000)
 
     return (
         <>
