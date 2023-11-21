@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { Nav } from "./views/Header/Nav";
 import { Home } from './views/Body/HomePage/Home';
 import { ToastContainer } from "react-toastify";
@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ListPokemon } from "./views/Body/Pokemon/ListPokemon";
 import { CountDown, CountDownUseHook } from './views/Body/CountDown/CountDown';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Blogs, BlogDetail, AddNewBlog } from './views/Body/Blogs/Blogs';
+import { Blogs, BlogDetail } from './views/Body/Blogs/Blogs';
 import { NoMatch } from './views/Body/ErrorRouter/NoMatch';
 
 function App() {
@@ -17,9 +17,6 @@ function App() {
         <header className="App-header">
           <Nav />
           <Switch>
-            <Route path="/blogs/add-blog" exact>
-              <AddNewBlog />
-            </Route>
             <Route path="/blogs/:id" exact>
               <BlogDetail />
             </Route>
@@ -44,7 +41,7 @@ function App() {
           </Switch>
           <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

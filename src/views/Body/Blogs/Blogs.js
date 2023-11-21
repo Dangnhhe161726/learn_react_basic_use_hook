@@ -1,35 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetch } from "../../../customize/fetch";
 import { Loading, IsError } from "../../Animation/Animation";
 import "../Pokemon/ListPokemon.scss";
 import "./Blog.scss";
 import { Link, useParams, useHistory } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { Button, Modal } from 'react-bootstrap';
+import axios from "axios";
+
 
 export const Blogs = () => {
-    const { data: dataBlog, loading, isError } = useFetch('https://jsonplaceholder.typicode.com/posts', false, 3000);
+    const [dataView, setDataView] = useState([]);
+    const [show, setShow] = useState(false);
 
-    let newDataBlog = [];
-    if (dataBlog && dataBlog.length > 0) {
-        newDataBlog = dataBlog.slice(0, 12);
-        // console.log('>>newDataBlog:', newDataBlog);
+
+    const { data: dataBlog, loading, isError } = useFetch('https://jsonplaceholder.typicode.com/posts', false, 1000);
+
+    useEffect(() => {
+        if (dataBlog && dataBlog.length > 0) {
+            let newDataBlog = dataBlog.slice(0, 12);
+            setDataView(newDataBlog);
+        }
+    }, [dataBlog])
+
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleAddNew = (blog) => {
+        let newDataBlog = dataView;
+        newDataBlog.unshift(blog)
+        setShow(false);
+        setDataView(newDataBlog);
+    }
+    const handleDeleteBlog = (id) => {
+        let updateData = dataView;
+        updateData = updateData.filter(item => item.id !== id)
+        setDataView(updateData);
     }
 
     return (
         <>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add new blog</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><AddNewBlog
+                    handleAddNew={handleAddNew}
+                /></Modal.Body>
+            </Modal>
             <h2>Blogs Page</h2>
             {
                 loading === false &&
                 <>
                     <div className="add-blog">
-                        <button className="btn-add-blog"><Link to="/blogs/add-blog">+ Add new blog</Link></button>
+                        <Button variant="primary" onClick={handleShow}>
+                            + Add new blog
+                        </Button>
                     </div>
                     <div className="blog-container">
-                        {newDataBlog.length > 0 &&
-                            newDataBlog.map(item => {
+                        {dataView.length > 0 &&
+                            dataView.map(item => {
                                 return (
                                     <div className="single-blog" key={item.id}>
-                                        <div className="title">
-                                            <span>title : </span> {item.title}
+                                        <div className="header-single-blog">
+                                            <div className="title">
+                                                <span>title : </span> {item.title}
+                                            </div>
+                                            <div className="delete-single-blog">
+                                                <span onClick={() => handleDeleteBlog(item.id)}>X</span>
+                                            </div>
                                         </div>
                                         <div className="content">
                                             {item.body}
@@ -52,12 +92,15 @@ export const Blogs = () => {
                 isError={isError}
             />
         </>
+
     )
 }
 
 export const BlogDetail = () => {
     let { id } = useParams();
     let history = useHistory();
+
+
     const { data: dataBlogDetail, loading } = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}`, false, 0);
 
     const handleBackData = () => {
@@ -65,6 +108,7 @@ export const BlogDetail = () => {
     }
 
     return (
+
         <div className="blog-detail">
             <div className="top-body">
                 <button onClick={handleBackData}>
@@ -88,33 +132,51 @@ export const BlogDetail = () => {
     )
 }
 
-export const AddNewBlog = () => {
+export const AddNewBlog = (props) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
-    const onSubmitForm = (e) => {
+    const onSubmitForm = async (e) => {
         e.preventDefault();
-        console.log('>>submit form:', title, content);
+        if (!title) {
+            toast.error('Title not empty', {
+                theme: "light"
+            });
+            return;
+        }
+        if (!content) {
+            toast.error('Content not empty', {
+                theme: "light"
+            });
+            return;
+        }
+        let blog = {
+            userId: 1,
+            title: title,
+            body: content,
+
+        }
+        let res = await axios.post('https://jsonplaceholder.typicode.com/posts', blog);
+        if (res && res.data) {
+            let newBlog = res.data;
+            props.handleAddNew(newBlog);
+        }
+
     }
 
     return (
-        <div className="add-blog-page">
-            <div className="add-blog-title">
-                Add new Blog
-            </div>
-            <div className="add-blog-form">
-                <form onSubmit={(e) => onSubmitForm(e)}>
-                    <label htmlFor="title">Title</label>
-                    <input id="title" type="text" placeholder="Enter title..."
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)} /><br />
-                    <label htmlFor="content">Content</label>
-                    <textarea id="content" placeholder="Enter content..."
-                        value={content}
-                        onChange={(event) => setContent(event.target.value)}></textarea><br />
-                    <button className="btn-submit-form" type="submit">Add</button>
-                </form>
-            </div>
+        <div className="add-blog-form">
+            <form onSubmit={(e) => onSubmitForm(e)}>
+                <label htmlFor="title">Title</label>
+                <input id="title" type="text" placeholder="Enter title..."
+                    value={title}
+                    onChange={(event) => setTitle(event.target.value)} /><br />
+                <label htmlFor="content">Content</label>
+                <textarea id="content" placeholder="Enter content..."
+                    value={content}
+                    onChange={(event) => setContent(event.target.value)}></textarea><br />
+                <button className="btn-submit-form" type="submit">Add</button>
+            </form>
         </div>
     )
 }
