@@ -8,6 +8,7 @@ import { CountDown, CountDownUseHook } from './views/Body/CountDown/CountDown';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Blogs, BlogDetail } from './views/Body/Blogs/Blogs';
 import { NoMatch } from './views/Body/ErrorRouter/NoMatch';
+import { Youtube } from './views/Body/Youtube/Youtube';
 
 function App() {
 
@@ -17,6 +18,9 @@ function App() {
         <header className="App-header">
           <Nav />
           <Switch>
+            <Route path="/watch" >
+              <Youtube />
+            </Route>
             <Route path="/blogs/:id" exact>
               <BlogDetail />
             </Route>

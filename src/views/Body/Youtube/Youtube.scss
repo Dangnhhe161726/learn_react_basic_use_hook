@@ -1,0 +1,59 @@
+.youtube-container {
+    .form-search {
+        input {
+            outline: none;
+            width: 300px;
+            padding-left: 15px;
+            border-radius: 3px 0 0 3px;
+            border-right: 0px;
+            border: solid gray;
+        }
+
+        button {
+            border-radius: 0 7px 7px 0;
+            border: solid gray;
+            border-left: 0;
+        }
+    }
+}
+
+.result-search {
+    display: flex;
+    margin-top: 50px;
+    padding: 0 70px;
+
+    .result-search-left {
+        iframe {
+            border-radius: 10px;
+            border: 1px solid wheat;
+        }
+    }
+
+    .result-search-right {
+        padding-left: 15px;
+        text-align: left;
+
+        .title {
+
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .time-update {
+            font-size: 13px;
+            color: gray;
+            margin-bottom: 10px;
+        }
+
+        .channel-title {
+            color: gray;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: gray;
+            font-size: 12px;
+        }
+    }
+}
