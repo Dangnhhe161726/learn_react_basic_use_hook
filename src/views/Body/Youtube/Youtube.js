@@ -15,7 +15,7 @@ export const Youtube = () => {
                 'part': 'snippet',
                 'maxResults': '20',
                 'q': query,
-                'key': 'AIzaSyCHH1hM-_5YTe3KyfZfzEokdri3w8l8w64',
+                'key': '',
                 'type': 'video'
             }
         })
